@@ -33,31 +33,22 @@ public class SinapLogin {
 
         sleep(ONE_SECOND_AND_A_HALF);
 
-        Connection.Response loginPage = Jsoup
-                .connect("http://siga.frba.utn.edu.ar/try/sinap.do")
-                .cookies(sigaCookies)
-                .followRedirects(true)
-                .userAgent(USER_AGENT)
-                .referrer(Siga.URL)
-                .method(GET)
-                .execute();
+        Connection.Response loginPage = goToLoginPage(sigaCookies);
 
         sleep(ONE_SECOND_AND_A_HALF);
 
-        String authState = loginPage.url().getQuery().replace("AuthState=", "");
-        Connection.Response loginAttempt = Jsoup.connect(loginPage.url().toString())
-                .cookies(loginPage.cookies())
-                .cookie("SimpleSAMLAuthToken", authState.replaceFirst("c%3.*", ""))
-                .data("username", username)
-                .data("password", password)
-                .data("AuthState", decode(authState, UTF_8))
-                .followRedirects(true)
-                .userAgent(USER_AGENT)
-                .method(POST)
-                .execute();
+        Connection.Response loginAttempt = attemptLogin(loginPage);
 
         sleep(ONE_SECOND_AND_A_HALF);
 
+        Map<String, String> sessionCookies = obtainSession(loginPage, loginAttempt);
+
+        sleep(ONE_SECOND_AND_A_HALF);
+
+        return sessionCookies;
+    }
+
+    private Map<String, String> obtainSession(Connection.Response loginPage, Connection.Response loginAttempt) throws IOException {
         Document loginAttemptPage = loginAttempt.parse();
 
         Elements form = loginAttemptPage.body().getElementsByTag("form");
@@ -70,15 +61,37 @@ public class SinapLogin {
         cookies.putAll(loginAttempt.cookies());
         cookies.putAll(loginPage.cookies());
 
-        Map<String, String> sessionCookies = Jsoup.connect(action).followRedirects(true).userAgent("curl").data("SAMLResponse", SAMLResponse).data("RelayState", RelayState)
+        return Jsoup.connect(action).followRedirects(true).userAgent("curl").data("SAMLResponse", SAMLResponse).data("RelayState", RelayState)
                 .cookies(cookies)
                 .userAgent(USER_AGENT)
                 .method(POST)
                 .execute()
                 .cookies();
+    }
 
-        sleep(ONE_SECOND_AND_A_HALF);
+    private Connection.Response attemptLogin(Connection.Response loginPage) throws IOException {
+        String authState = loginPage.url().getQuery().replace("AuthState=", "");
 
-        return sessionCookies;
+        return Jsoup.connect(loginPage.url().toString())
+                .cookies(loginPage.cookies())
+                .cookie("SimpleSAMLAuthToken", authState.replaceFirst("c%3.*", ""))
+                .data("username", username)
+                .data("password", password)
+                .data("AuthState", decode(authState, UTF_8))
+                .followRedirects(true)
+                .userAgent(USER_AGENT)
+                .method(POST)
+                .execute();
+    }
+
+    private Connection.Response goToLoginPage(Map<String, String> sigaCookies) throws IOException {
+        return Jsoup
+                .connect("http://siga.frba.utn.edu.ar/try/sinap.do")
+                .cookies(sigaCookies)
+                .followRedirects(true)
+                .userAgent(USER_AGENT)
+                .referrer(Siga.URL)
+                .method(GET)
+                .execute();
     }
 }

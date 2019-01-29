@@ -1,6 +1,6 @@
-package login;
+package siga.login;
 
-import login.exceptions.BadCredentialsException;
+import siga.login.exceptions.BadCredentialsException;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,7 +18,7 @@ import static java.util.Objects.isNull;
 import static org.jsoup.Connection.Method.GET;
 import static org.jsoup.Connection.Method.POST;
 
-public class SinapLogin {
+public class SinapLogin implements Login {
     public static final int ONE_SECOND_AND_A_HALF = 1500;
     public static final String USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.90 Safari/537.36";
 
@@ -32,6 +32,7 @@ public class SinapLogin {
         this.password = password;
     }
 
+    @Override
     public Map<String, String> doLogin() throws BadCredentialsException {
         try {
             return attemptLogin();

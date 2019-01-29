@@ -1,6 +1,6 @@
-package login;
+package siga.login;
 
-import login.exceptions.BadCredentialsException;
+import siga.login.exceptions.BadCredentialsException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
@@ -11,8 +11,8 @@ import java.util.Map;
 import static org.junit.Assert.assertTrue;
 
 public class SinapLoginTest {
-    private static String USERNAME = "tu_usuario";
-    private static String PASSWORD = "tu_password";
+    public static String USERNAME = "tu_username";
+    public static String PASSWORD = "tu_password";
 
     @Test
     public void can_login_with_sinap() throws BadCredentialsException, IOException {

@@ -1,17 +1,16 @@
 package siga.login;
 
-import siga.login.exceptions.BadCredentialsException;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import siga.Siga;
+import siga.login.exceptions.BadCredentialsException;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.sun.xml.internal.ws.commons.xmlutil.Converter.UTF_8;
 import static java.lang.Thread.sleep;
 import static java.net.URLDecoder.decode;
 import static java.util.Objects.isNull;
@@ -108,7 +107,7 @@ public class SinapLogin implements Login {
                 .cookie("SimpleSAMLAuthToken", authState.replaceFirst("c%3.*", ""))
                 .data("username", username)
                 .data("password", password)
-                .data("AuthState", decode(authState, UTF_8))
+                .data("AuthState", decode(authState, "UTF-8"))
                 .followRedirects(true)
                 .userAgent(USER_AGENT)
                 .method(POST)

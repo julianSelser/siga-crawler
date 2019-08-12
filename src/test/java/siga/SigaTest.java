@@ -3,7 +3,7 @@ package siga;
 import org.junit.Test;
 import siga.login.SinapLogin;
 import siga.login.exceptions.BadCredentialsException;
-import siga.models.finales.Finales;
+import siga.models.finales.ActaDeFinales;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class SigaTest {
         SinapLogin login = new SinapLogin(USERNAME, PASSWORD);
         Siga siga = new Siga(login);
 
-        Finales acta = siga.actasDeFinal();
+        ActaDeFinales acta = siga.actasDeFinal();
 
         // confio en que si estas aca, aprobaste algun final
         // para que pase el test :D :D :D :D :D :D :D :D :D

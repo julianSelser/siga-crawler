@@ -1,10 +1,11 @@
 package siga;
 
+import fr.whimtrip.ext.jwhthtmltopojo.HtmlToPojoEngine;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import siga.login.SinapLogin;
 import siga.login.exceptions.BadCredentialsException;
-import siga.models.finales.Finales;
+import siga.models.finales.ActaDeFinales;
 
 import java.io.IOException;
 import java.util.Map;
@@ -17,9 +18,10 @@ public class Siga {
         this.session = login.doLogin();
     }
 
-    public Finales actasDeFinal() throws IOException {
+    public ActaDeFinales actasDeFinal() throws IOException {
         Document actasPage = Jsoup.connect(URL + "/alu/acfin.do").cookies(session).get();
+        HtmlToPojoEngine parser = HtmlToPojoEngine.create();
 
-        return null;
+        return parser.adapter(ActaDeFinales.class).loadFromNode(actasPage);
     }
 }

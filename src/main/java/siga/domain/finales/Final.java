@@ -2,6 +2,10 @@ package siga.domain.finales;
 
 import fr.whimtrip.ext.jwhthtmltopojo.annotation.Selector;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+
 public class Final {
     @Selector(value = "td:nth-child(1)") private String fecha;
     @Selector(value = "td:nth-child(2)") private String codigoMateria;
@@ -20,8 +24,8 @@ public class Final {
         this.nota = nota;
     }
 
-    public String getFecha() {
-        return fecha;
+    public LocalDate getFecha() {
+        return LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public String getCodigoMateria() {
@@ -40,7 +44,17 @@ public class Final {
         return folio;
     }
 
-    public String getNota() {
+    public String getNotaRaw() {
         return nota;
+    }
+
+    public Optional<Double> getNota() {
+        try {
+            String cleanNota = nota.replace(",", ".");
+
+            return Optional.of(Double.valueOf(cleanNota));
+        } catch (Throwable e) {
+            return Optional.empty();
+        }
     }
 }

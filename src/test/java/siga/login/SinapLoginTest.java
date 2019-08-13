@@ -1,5 +1,6 @@
 package siga.login;
 
+import org.junit.Ignore;
 import siga.login.exceptions.BadCredentialsException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 
+@Ignore
 public class SinapLoginTest {
     public static String USERNAME = "tu_username";
     public static String PASSWORD = "tu_password";

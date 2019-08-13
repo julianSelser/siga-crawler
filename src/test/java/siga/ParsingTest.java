@@ -6,6 +6,8 @@ import org.junit.Test;
 import siga.domain.finales.ActaDeFinales;
 import siga.domain.finales.Final;
 
+import java.time.format.DateTimeFormatter;
+
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
@@ -30,11 +32,11 @@ public class ParsingTest {
         Final aFinal = parser.adapter(Final.class).fromHtml(finalHtml);
 
         assertEquals(aFinal.getCodigoMateria(), "082037");
-        assertEquals(aFinal.getFecha(), "21/12/2018");
+        assertEquals(aFinal.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), "21/12/2018");
         assertEquals(aFinal.getFolio(), "101");
         assertEquals(aFinal.getLibro(), "K0112");
         assertEquals(aFinal.getNombreMateria(), "Proyecto Final");
-        assertEquals(aFinal.getNota(), "9");
+        assertEquals(aFinal.getNotaRaw(), "9");
     }
 
     @Test
@@ -60,15 +62,15 @@ public class ParsingTest {
 
         ActaDeFinales anActa = parser.adapter(ActaDeFinales.class).fromHtml(actaTableWithUselessHeader);
 
-        assertTrue(anActa.getAprobados().size() == 1);
+        assertTrue(anActa.getFinales().size() == 1);
 
-        Final theOnlyValidFinal = anActa.getAprobados().get(0);
+        Final theOnlyValidFinal = anActa.getFinales().get(0);
 
         assertEquals(theOnlyValidFinal.getCodigoMateria(), "082037");
-        assertEquals(theOnlyValidFinal.getFecha(), "21/12/2018");
+        assertEquals(theOnlyValidFinal.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), "21/12/2018");
         assertEquals(theOnlyValidFinal.getFolio(), "101");
         assertEquals(theOnlyValidFinal.getLibro(), "K0112");
         assertEquals(theOnlyValidFinal.getNombreMateria(), "Proyecto Final");
-        assertEquals(theOnlyValidFinal.getNota(), "9");
+        assertEquals(theOnlyValidFinal.getNotaRaw(), "9");
     }
 }

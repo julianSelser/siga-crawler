@@ -21,6 +21,6 @@ public class SigaTest {
 
         // confio en que si estas aca, aprobaste algun final
         // para que pase el test :D :D :D :D :D :D :D :D :D
-        assertTrue(!acta.getAprobados().isEmpty());
+        assertTrue(!acta.getFinales().isEmpty());
     }
 }

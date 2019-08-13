@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+import static java.time.LocalDate.of;
+
 public class Final {
     @Selector(value = "td:nth-child(1)") private String fecha;
     @Selector(value = "td:nth-child(2)") private String codigoMateria;
@@ -51,8 +53,16 @@ public class Final {
     public Optional<Double> getNota() {
         try {
             String cleanNota = nota.replace(",", ".");
+            Double parsed = Double.valueOf(cleanNota);
 
-            return Optional.of(Double.valueOf(cleanNota));
+            // ver https://www.utnianos.com.ar/foro/tema-muy-imp-nuevo-reglamento
+            // gracias Caro, sos muy bonita
+            Double converted
+                    = getFecha().isBefore(of(2017, 3, 13))
+                        ? 2*((parsed + 5)/3)
+                        : parsed;
+
+            return Optional.of(converted);
         } catch (Throwable e) {
             return Optional.empty();
         }

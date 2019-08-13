@@ -4,36 +4,32 @@ import org.junit.Test;
 import siga.domain.finales.ActaDeFinales;
 import siga.domain.finales.Final;
 
-import java.io.Console;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 import static junit.framework.TestCase.assertEquals;
 
 public class ActaDeFinalesTest {
     @Test
     public void can_get_promedio_without_reprobados() {
-        List<Final> aprobados = asList(
-                new Final("21/11/2018", "", "", "", "", "6"));
-        List<Final> reprobados = asList(
+        List<Final> finales = asList(
+                new Final("21/11/2018", "", "", "", "", "6"),
                 new Final("22/11/2018", "", "", "", "", "4"));
 
         //no se cuenta reprobados, promedio 6
-        ActaDeFinales acta = new ActaDeFinales(aprobados, reprobados);
+        ActaDeFinales acta = new ActaDeFinales(finales);
 
         assertEquals(6D, acta.getPromedioSinReprobados());
     }
 
     @Test
     public void can_get_promedio_with_reprobados() {
-        List<Final> aprobados = asList(
-                new Final("21/11/2018", "", "", "", "", "6"));
-        List<Final> reprobados = asList(
+        List<Final> finales = asList(
+                new Final("21/11/2018", "", "", "", "", "6"),
                 new Final("22/11/2018", "", "", "", "", "4"));
 
         // (4 + 6)/2 = 5
-        ActaDeFinales acta = new ActaDeFinales(aprobados, reprobados);
+        ActaDeFinales acta = new ActaDeFinales(finales);
 
         assertEquals(5D, acta.getPromedio());
     }
@@ -49,8 +45,8 @@ public class ActaDeFinalesTest {
         );
 
         // (6 + 6(nueva escala))/2 = 6
-        ActaDeFinales acta = new ActaDeFinales(finals, emptyList());
+        ActaDeFinales acta = new ActaDeFinales(finals);
 
-        assertEquals(6D, acta.getPromedioSinReprobados());
+        assertEquals(6D, acta.getPromedio());
     }
 }

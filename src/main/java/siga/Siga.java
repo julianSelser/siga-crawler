@@ -5,7 +5,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import siga.login.SinapLogin;
 import siga.login.exceptions.BadCredentialsException;
-import siga.models.finales.ActaDeFinales;
+import siga.domain.finales.ActaDeFinales;
 
 import java.io.IOException;
 import java.util.Map;

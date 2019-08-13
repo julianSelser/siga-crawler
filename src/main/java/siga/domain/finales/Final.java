@@ -1,8 +1,6 @@
-package siga.models.finales;
+package siga.domain.finales;
 
 import fr.whimtrip.ext.jwhthtmltopojo.annotation.Selector;
-
-import java.time.LocalDate;
 
 public class Final {
     @Selector(value = "td:nth-child(1)") private String fecha;
@@ -12,8 +10,18 @@ public class Final {
     @Selector(value = "td:nth-child(5)") private String folio;
     @Selector(value = "td:nth-child(6)") private String nota;
 
+    public Final() {}
+    public Final(String fecha, String codigoMateria, String nombreMateria, String libro, String folio, String nota) {
+        this.fecha = fecha;
+        this.codigoMateria = codigoMateria;
+        this.nombreMateria = nombreMateria;
+        this.libro = libro;
+        this.folio = folio;
+        this.nota = nota;
+    }
+
     public String getFecha() {
-        return fecha;// return LocalDate.parse(fecha);
+        return fecha;
     }
 
     public String getCodigoMateria() {

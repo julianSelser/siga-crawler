@@ -3,8 +3,8 @@ package siga;
 
 import fr.whimtrip.ext.jwhthtmltopojo.HtmlToPojoEngine;
 import org.junit.Test;
-import siga.models.finales.ActaDeFinales;
-import siga.models.finales.Final;
+import siga.domain.finales.ActaDeFinales;
+import siga.domain.finales.Final;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;

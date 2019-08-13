@@ -3,7 +3,7 @@ package siga;
 import org.junit.Test;
 import siga.login.SinapLogin;
 import siga.login.exceptions.BadCredentialsException;
-import siga.models.finales.ActaDeFinales;
+import siga.domain.finales.ActaDeFinales;
 
 import java.io.IOException;
 

@@ -53,14 +53,14 @@ public class Final {
     public Optional<Double> getNota() {
         try {
             String cleanNota = nota.replace(",", ".");
-            Double parsed = Double.valueOf(cleanNota);
+            Double nota = Double.valueOf(cleanNota);
 
             // ver https://www.utnianos.com.ar/foro/tema-muy-imp-nuevo-reglamento
             // gracias Caro, sos muy bonita
             Double converted
-                    = getFecha().isBefore(of(2017, 3, 13))
-                        ? 2*((parsed + 5)/3)
-                        : parsed;
+                    = nota >= 4 && getFecha().isBefore(of(2017, 3, 13))
+                        ? 2*((nota + 5)/3)
+                        : nota;
 
             return Optional.of(converted);
         } catch (Throwable e) {
